@@ -6,10 +6,12 @@ on:
       - master
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -18,9 +20,27 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
-      - name: Build and deploy
-        uses: shalzz/zola-deploy-action@v0.19.2
-        env:
-          # CRITICAL FIX: Deploy the built HTML to a separate branch
-          PAGES_BRANCH: gh-pages
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup Zola
+        uses: taiki-e/setup-action@cargo@v1
+        with:
+          name: zola
+          version: '0.19.2'
+
+      - name: Build site
+        run: zola build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './public'
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
