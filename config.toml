@@ -1,4 +1,4 @@
-base_url = "https://github.com/prashantstha17"
+base_url = "https://prashantstha17.github.io/"
 title = "PRASHANT SHRESTHA"
 theme = "apollo"
 taxonomies = [{ name = "tags" }]
