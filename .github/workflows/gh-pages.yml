@@ -11,23 +11,16 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/getzola/zola:v0.19.2
-
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           submodules: recursive
-          fetch-depth: 0
+          fetch-depth: 0        
 
-      - name: Build site
-        run: zola build
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@47f197a2200bb9de68ba5f48fad1c088eb1c4a32 # v4.0.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
+      - name: Build and deploy
+        uses: shalzz/zola-deploy-action@v0.19.2
+        env:
+          PAGES_BRANCH: gh-pages
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
