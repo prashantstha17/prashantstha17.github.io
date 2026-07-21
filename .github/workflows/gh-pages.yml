@@ -11,7 +11,6 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    
     steps:
       - name: Checkout repository
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
@@ -22,6 +21,6 @@ jobs:
       - name: Build and deploy
         uses: shalzz/zola-deploy-action@v0.19.2
         env:
-          # For User Sites, deploy to the SAME branch (master/main)
-          PAGES_BRANCH: master
+          # CRITICAL FIX: Deploy the built HTML to a separate branch
+          PAGES_BRANCH: gh-pages
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
