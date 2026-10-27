@@ -5,12 +5,16 @@ taxonomies = [{ name = "tags" }]
 
 [markdown]
 [markdown.highlighting]
-theme = "catppuccin-mocha"
+style = "class"
+light_theme = "catppuccin-latte"
+dark_theme = "catppuccin-mocha"
 
 [extra]
 theme = "toggle"
 toc = true
 fancy_code = true
+dynamic_note = true
+use_cdn = false
 
 menu = [
   { name = "/posts", url = "/posts", weight = 1 },
@@ -22,3 +26,10 @@ menu = [
 socials = [
   { name = "github", url = "https://github.com/prashantstha17", icon = "github" }
 ]
+
+[extra.analytics]
+enabled = false
+
+[extra.taxonomies]
+sort_by = "page_count"
+reverse = true
